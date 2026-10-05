@@ -3,79 +3,78 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Rafael Weber - Solutions Architect & Technical Account Manager</title>
+    <title>Rafael Weber - Currículo / Resume</title>
     <style>
         :root {
             --primary-color: #0366d6;
-            --secondary-color: #24292e;
-            --text-color: #333333;
+            --text-color: #24292e;
             --bg-color: #f6f8fa;
             --card-bg: #ffffff;
             --border-color: #e1e4e8;
+            --secondary-text: #586069;
         }
 
         body {
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-            line-height: 1.6;
             color: var(--text-color);
             background-color: var(--bg-color);
             margin: 0;
             padding: 20px;
+            line-height: 1.5;
         }
 
         .container {
             max-width: 800px;
             margin: 0 auto;
             background: var(--card-bg);
-            padding: 40px;
-            border-radius: 8px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
             border: 1px solid var(--border-color);
+            border-radius: 6px;
+            padding: 40px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
         }
 
-        .lang-switcher {
+        .lang-switch {
             text-align: right;
             margin-bottom: 20px;
         }
 
-        .lang-btn {
-            background-color: #f1f8ff;
-            border: 1px solid var(--primary-color);
-            color: var(--primary-color);
+        .lang-switch button {
+            background-color: #fafbfc;
+            border: 1px solid var(--border-color);
+            color: var(--text-color);
             padding: 6px 12px;
             border-radius: 4px;
             cursor: pointer;
-            font-weight: bold;
-            transition: all 0.2s;
+            font-weight: 600;
+            transition: background-color 0.2s;
         }
 
-        .lang-btn:hover {
-            background-color: var(--primary-color);
-            color: white;
+        .lang-switch button:hover {
+            background-color: #e1e4e8;
         }
 
         header {
-            border-bottom: 2px solid var(--border-color);
+            border-bottom: 1px solid var(--border-color);
             padding-bottom: 20px;
             margin-bottom: 20px;
         }
 
         h1 {
             margin: 0 0 5px 0;
-            color: var(--secondary-color);
             font-size: 28px;
+            color: var(--text-color);
         }
 
         .subtitle {
-            font-size: 18px;
-            color: var(--primary-color);
+            font-size: 16px;
+            color: var(--secondary-text);
             margin-bottom: 10px;
-            font-weight: 600;
+            font-weight: 500;
         }
 
         .contact-info {
             font-size: 14px;
-            color: #586069;
+            color: var(--secondary-text);
         }
 
         .contact-info a {
@@ -92,20 +91,27 @@
         }
 
         h2 {
-            font-size: 20px;
-            color: var(--secondary-color);
+            font-size: 18px;
             border-bottom: 1px solid var(--border-color);
-            padding-bottom: 5px;
+            padding-bottom: 6px;
             margin-bottom: 15px;
+            color: var(--text-color);
         }
 
-        .job {
+        .job, .edu-item {
             margin-bottom: 20px;
         }
 
+        .job-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            flex-wrap: wrap;
+        }
+
         .job-title {
-            font-weight: bold;
-            color: var(--secondary-color);
+            font-weight: 600;
+            font-size: 16px;
         }
 
         .job-company {
@@ -114,46 +120,44 @@
         }
 
         .job-date {
-            float: right;
-            color: #586069;
-            font-size: 14px;
+            font-size: 13px;
+            color: var(--secondary-text);
         }
 
         ul {
-            margin: 5px 0 15px 20px;
+            margin: 5px 0 0 20px;
             padding: 0;
         }
 
         li {
-            margin-bottom: 5px;
+            margin-bottom: 6px;
             font-size: 14px;
         }
 
         .skills-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-            gap: 15px;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 10px;
             font-size: 14px;
         }
 
-        .skill-category {
-            background: #fdfdfe;
+        .skills-category {
+            background: var(--bg-color);
+            padding: 10px;
+            border-radius: 4px;
             border: 1px solid var(--border-color);
-            padding: 10px 15px;
-            border-radius: 6px;
         }
 
-        .skill-category strong {
+        .skills-category strong {
             display: block;
             margin-bottom: 5px;
-            color: var(--secondary-color);
         }
 
-        .lang-version {
+        .lang-content {
             display: none;
         }
 
-        .lang-version.active {
+        .lang-content.active {
             display: block;
         }
 
@@ -161,10 +165,8 @@
             .container {
                 padding: 20px;
             }
-            .job-date {
-                float: none;
-                display: block;
-                margin-bottom: 5px;
+            .job-header {
+                flex-direction: column;
             }
         }
     </style>
@@ -172,17 +174,19 @@
 <body>
 
 <div class="container">
-    <div class="lang-switcher">
-        <button class="lang-btn" id="langToggle" onclick="switchLanguage()">English Version</button>
+    <!-- Botão de Alternância de Idioma -->
+    <div class="lang-switch">
+        <button id="btn-pt" onclick="switchLang('pt')">English Version</button>
+        <button id="btn-en" onclick="switchLang('en')" style="display:none;">Versão em Português</button>
     </div>
 
-    <!-- VERSÃO EM PORTUGUÊS -->
-    <div id="version-pt" class="lang-version active">
+    <!-- ================= CONTEÚDO EM PORTUGUÊS ================= -->
+    <div id="content-pt" class="lang-content active">
         <header>
             <h1>Rafael Weber</h1>
             <div class="subtitle">Solutions Architect | Technical Account Manager | Edge Computing</div>
             <div class="contact-info">
-                Porto Alegre, RS, Brasil | 
+                Porto Alegre, Rio Grande do Sul, Brasil | 
                 <a href="mailto:helioweber@gmail.com">helioweber@gmail.com</a> | 
                 <a href="https://www.linkedin.com/in/rafaelweber" target="_blank">LinkedIn</a>
             </div>
@@ -190,27 +194,25 @@
 
         <section>
             <h2>Resumo Profissional</h2>
-            <p>Profissional sênior de TI com vasta experiência em Linux, infraestrutura e computação em borda (Edge Computing). Especialista em otimizar a performance e a segurança de plataformas para clientes corporativos, unindo profundo conhecimento técnico com gestão estratégica de relacionamentos para assegurar o sucesso contínuo de contas estratégicas. Histórico comprovado em arquitetura de soluções, resolução de problemas complexos e liderança técnica.</p>
+            <p style="font-size: 14px; margin: 0;">
+                Profissional experiente em soluções de TI com sólida formação em Linux e infraestrutura. Ajudo clientes a otimizar a performance e a segurança de suas plataformas, combinando profundo conhecimento técnico com gestão estratégica de relacionamentos para garantir o sucesso contínuo.
+            </p>
         </section>
 
         <section>
-            <h2>Competências Técnicas</h2>
+            <h2>Competências & Idiomas</h2>
             <div class="skills-grid">
-                <div class="skill-category">
-                    <strong>Arquitetura & Nuvem</strong>
-                    Edge Computing, Arquitetura de Soluções, Virtualização, Containers (Docker, Kubernetes).
+                <div class="skills-category">
+                    <strong>Principais Habilidades</strong>
+                    Monitoramento proativo, Red Hat Linux, Treinamento
                 </div>
-                <div class="skill-category">
-                    <strong>Sistemas & Redes</strong>
-                    Red Hat Linux, Linux (LPI 1 & LPI 2), Redes, WAF, Caching.
+                <div class="skills-category">
+                    <strong>Idiomas</strong>
+                    Inglês (Intermediário/Limitado), Espanhol (Limitado)
                 </div>
-                <div class="skill-category">
-                    <strong>Operações & Suporte</strong>
-                    Monitoramento Proativo, Resposta a Incidentes, RCA, Automação, Zabbix.
-                </div>
-                <div class="skill-category">
-                    <strong>Negócios & Soft Skills</strong>
-                    Gestão de Contas (TAM), Consultoria Técnica, Treinamentos, Liderança Técnica.
+                <div class="skills-category">
+                    <strong>Certificações & Publicações</strong>
+                    Linux Professional Institute 1 & 2<br>Wimax - Utilização em última milha
                 </div>
             </div>
         </section>
@@ -219,212 +221,307 @@
             <h2>Experiência Profissional</h2>
 
             <div class="job">
-                <div>
-                    <span class="job-title">Solutions Architect | Technical Account Manager</span>
-                    <span class="job-date">Junho 2023 – Presente</span>
+                <div class="job-header">
+                    <div>
+                        <span class="job-title">Solutions Architect | Technical Account Manager</span><br>
+                        <span class="job-company">Azion</span>
+                    </div>
+                    <div class="job-date">Junho de 2023 – Presente (3 anos 5 meses)</div>
                 </div>
-                <div class="job-company">Azion</div>
+                <p style="font-size: 14px; margin: 8px 0 4px 0;">Como Solutions Architect e Technical Account Manager, gerencio relacionamentos técnicos com clientes e os ajudo a maximizar o valor da plataforma Azion. Minhas principais contribuições incluem:</p>
                 <ul>
-                    <li>Gerenciamento de relacionamentos técnicos com clientes estratégicos, maximizando o valor extraído da plataforma Azion.</li>
-                    <li>Liderança em iniciativas estratégicas junto aos times de Customer Growth, Segurança e Engenharia de Soluções.</li>
-                    <li>Definição e execução de arquiteturas customizadas, implementando serviços críticos focados em performance e segurança.</li>
-                    <li>Atuação como ponto focal técnico para monitoramento de recursos e alinhamento de soluções aos objetivos de negócio.</li>
+                    <li>Liderança de iniciativas estratégicas com as equipes de Customer Growth, Segurança e Solutions Engineering, garantindo o sucesso de longo prazo dos clientes.</li>
+                    <li>Definição e execução de arquiteturas de soluções personalizadas, implementando serviços críticos para otimizar performance e segurança.</li>
+                    <li>Atuação como líder técnico, fornecendo treinamento e suporte a clientes e equipes internas, além de guiar a trilha de aprendizado do Solutions Lab.</li>
+                    <li>Gerenciamento proativo de relacionamentos com clientes, atuando como ponto focal técnico para monitorar a utilização de recursos e alinhar soluções diretamente com os objetivos de negócios.</li>
                     <li>Resposta e mitigação de incidentes de segurança em colaboração com o Security Response Team.</li>
+                    <li>Diagnóstico e resolução de problemas técnicos complexos, garantindo estabilidade e integração perfeita de serviços.</li>
                 </ul>
             </div>
 
             <div class="job">
-                <div>
-                    <span class="job-title">Technical Support Engineer - Specialist</span>
-                    <span class="job-date">Julho 2019 – Junho 2023</span>
+                <div class="job-header">
+                    <div>
+                        <span class="job-title">Technical Support Engineer - Specialist</span><br>
+                        <span class="job-company">Azion</span>
+                    </div>
+                    <div class="job-date">Julho de 2019 – Junho de 2023 (4 anos) | Porto Alegre</div>
                 </div>
-                <div class="job-company">Azion</div>
                 <ul>
-                    <li>Suporte técnico de alto nível (troubleshooting avançado) em Edge Computing, segurança (WAF), redes e caching.</li>
-                    <li>Desenvolvimento de materiais instrucionais e condução de treinamentos para capacitação de clientes e equipe interna.</li>
-                    <li>Representação dos interesses dos clientes junto aos times de desenvolvimento e produto para evolução da plataforma.</li>
+                    <li><strong>Support Specialist:</strong> Suporte técnico de alto nível, com foco em resolução avançada de problemas e troubleshooting em áreas como Edge Computing, segurança (WAF), redes, caching e otimização de imagens.</li>
+                    <li><strong>Education and Training:</strong> Desenvolvimento de materiais instrucionais e condução de sessões de treinamento para capacitar clientes e novos membros da equipe a utilizarem a plataforma de forma eficaz.</li>
+                    <li><strong>Strategic Partnership:</strong> Participação ativa na melhoria de processos internos e colaboração com outras equipes para otimizar fluxos de trabalho.</li>
+                    <li><strong>Effective Communication:</strong> Representação dos interesses dos clientes perante as equipes de desenvolvimento e produto, garantindo que o feedback fosse considerado para a evolução da plataforma.</li>
+                    <li><strong>Support Leadership:</strong> Atuação como ponto central em reuniões com clientes para entender problemas, definir soluções estratégicas e garantir resolução rápida e eficaz de casos.</li>
+                    <li><strong>Knowledge Contribution:</strong> Desenvolvimento e manutenção de artigos de base de conhecimento para auxiliar tanto a equipe interna quanto os clientes na resolução de dúvidas comuns.</li>
                 </ul>
             </div>
 
             <div class="job">
-                <div>
-                    <span class="job-title">Support Analyst</span>
-                    <span class="job-date">Setembro 2018 – Julho 2019</span>
+                <div class="job-header">
+                    <div>
+                        <span class="job-title">Support Analyst</span><br>
+                        <span class="job-company">Unirede Soluções Corporativas</span>
+                    </div>
+                    <div class="job-date">Setembro de 2018 – Julho de 2019 (11 meses)</div>
                 </div>
-                <div class="job-company">Unirede Soluções Corporativas</div>
                 <ul>
-                    <li>Análise de incidentes críticos e recorrentes (RCA) para garantir disponibilidade e performance de ambientes.</li>
-                    <li>Implementação de melhorias contínuas, automações e otimizações de processos para aumento de eficiência.</li>
-                    <li>Consultoria e suporte para ambientes Zabbix e participação em salas de crise.</li>
+                    <li><strong>Troubleshooting and Diagnosis:</strong> Análise de incidentes críticos e recorrentes (RCA) e resolução de problemas de TI para garantir a disponibilidade e performance dos ambientes dos clientes.</li>
+                    <li><strong>Incident and Request Management:</strong> Tratamento de tickets de suporte, variando de eventos e incidentes a solicitações operacionais, seguindo procedimentos documentados.</li>
+                    <li><strong>Improvement Implementation:</strong> Sugestão e implementação de melhorias contínuas, automações e otimizações de processos para reduzir tarefas repetitivas e aumentar a eficiência.</li>
+                    <li><strong>Team Collaboration:</strong> Trabalho direto com outras áreas técnicas e de negócios para identificar oportunidades de inovação e garantir a observabilidade dos ambientes dos clientes.</li>
+                    <li><strong>Training and Consulting:</strong> Assistência e consultoria para ambientes Zabbix, além de participação em sessões de treinamento interno.</li>
+                    <li><strong>Customer Communication:</strong> Atuação como ponto de contato com o cliente, participando de salas de crise e mantendo comunicação para alinhar expectativas e garantir satisfação.</li>
                 </ul>
             </div>
 
             <div class="job">
-                <div>
-                    <span class="job-title">IT Infrastructure Analyst - Linux</span>
-                    <span class="job-date">Fevereiro 2018 – Maio 2018</span>
+                <div class="job-header">
+                    <div>
+                        <span class="job-title">IT Infrastructure Analyst - Linux</span><br>
+                        <span class="job-company">InterOp</span>
+                    </div>
+                    <div class="job-date">Fevereiro de 2018 – Maio de 2018 (4 meses) | Porto Alegre, RS</div>
                 </div>
-                <div class="job-company">InterOp</div>
                 <ul>
-                    <li>Administração e gestão de infraestruturas de TI de clientes, assegurando a disponibilidade de sistemas Linux e redes.</li>
+                    <li><strong>Environment Administration:</strong> Gestão e administração da infraestrutura de TI de clientes, assegurando a disponibilidade e performance de sistemas Linux, incluindo configuração e manutenção de servidores, serviços e aplicações.</li>
+                    <li><strong>Troubleshooting:</strong> Diagnóstico e resolução de incidentes técnicos complexos em ambientes Linux e redes, fornecendo suporte de alta qualidade (Service Desk) aos clientes.</li>
+                    <li><strong>Emerging Technologies:</strong> Colaboração na implementação e gestão de tecnologias modernas, como virtualização, containers (Docker e Kubernetes) e soluções em nuvem.</li>
                 </ul>
             </div>
 
             <div class="job">
-                <div>
-                    <span class="job-title">Analista de Sistemas / Consultor Linux</span>
-                    <span class="job-date">Maio 2007 – 2018</span>
+                <div class="job-header">
+                    <div>
+                        <span class="job-title">Analista Sistemas</span><br>
+                        <span class="job-company">Associação de Literatura e Beneficência</span>
+                    </div>
+                    <div class="job-date">2013 – 2018 (5 anos) | Porto Alegre e Região, Brasil</div>
                 </div>
-                <div class="job-company">Associação de Literatura e Beneficência & LM2 Consulting</div>
+            </div>
+
+            <div class="job">
+                <div class="job-header">
+                    <div>
+                        <span class="job-title">Linux Consultant</span><br>
+                        <span class="job-company">LM2 Consulting</span>
+                    </div>
+                    <div class="job-date">Maio de 2007 – Agosto de 2013 (6 anos 4 meses)</div>
+                </div>
+                <p style="font-size: 14px; margin: 8px 0 4px 0;">Como Consultor Linux, forneci suporte especializado para infraestruturas de TI de clientes, alinhando soluções técnicas às necessidades de negócios. Responsabilidades:</p>
                 <ul>
-                    <li>Administração de ambientes Linux críticos, implementação de monitoramento proativo e automação via scripts.</li>
+                    <li><strong>Systems Administration:</strong> Gerenciamento e manutenção de ambientes Linux, incluindo servidores, serviços e aplicações, assegurando alta disponibilidade e performance.</li>
+                    <li><strong>Optimization and Security:</strong> Condução de diagnósticos e implementação de melhorias em sistemas operacionais, scripts e configurações para elevar a segurança e otimizar performance.</li>
+                    <li><strong>Support and Troubleshooting:</strong> Atuação no diagnóstico e resolução de incidentes complexos de infraestrutura, garantindo a continuidade dos negócios dos clientes.</li>
+                    <li><strong>Monitoring and Automation:</strong> Implantação de ferramentas de monitoramento para detecção proativa de problemas e desenvolvimento de scripts para automação de tarefas rotineiras.</li>
+                    <li><strong>Strategic Collaboration:</strong> Trabalho próximo aos times dos clientes para compreender demandas, sugerindo e implementando soluções integradas à estratégia de gestão de TI da LM2.</li>
                 </ul>
             </div>
         </section>
 
         <section>
-            <h2>Formação Acadêmica & Certificações</h2>
-            <ul>
-                <li><strong>Engenharia de Telecomunicações</strong> | Centro Universitário La Salle (2008 – 2017)</li>
-                <li><strong>Técnico em Informática Industrial</strong> | Senai (2005 – 2007)</li>
-                <li><strong>Certificações:</strong> Linux Professional Institute 1 (LPI-1), Linux Professional Institute 2 (LPI-2)</li>
-                <li><strong>Idiomas:</strong> Português (Nativo), Inglês (Intermediário/Técnico), Espanhol (Básico)</li>
-            </ul>
+            <h2>Formação Acadêmica</h2>
+            <div class="edu-item">
+                <div class="job-header">
+                    <div>
+                        <span class="job-title">Engenharia de Telecomunicações</span><br>
+                        <span class="job-company">Centro Universitário La Salle</span>
+                    </div>
+                    <div class="job-date">2008 – 2017</div>
+                </div>
+            </div>
+            <div class="edu-item">
+                <div class="job-header">
+                    <div>
+                        <span class="job-title">Técnico em Informática Industrial</span><br>
+                        <span class="job-company">Senai</span>
+                    </div>
+                    <div class="job-date">2005 – 2007</div>
+                </div>
+            </div>
         </section>
     </div>
 
-    <!-- VERSÃO EM INGLÊS -->
-    <div id="version-en" class="lang-version">
+    <!-- ================= CONTEÚDO EM INGLÊS (Fiel ao PDF) ================= -->
+    <div id="content-en" class="lang-content">
         <header>
             <h1>Rafael Weber</h1>
             <div class="subtitle">Solutions Architect | Technical Account Manager | Edge Computing</div>
             <div class="contact-info">
-                Porto Alegre, RS, Brazil | 
+                Porto Alegre, Rio Grande do Sul, Brazil | 
                 <a href="mailto:helioweber@gmail.com">helioweber@gmail.com</a> | 
                 <a href="https://www.linkedin.com/in/rafaelweber" target="_blank">LinkedIn</a>
             </div>
         </header>
 
         <section>
-            <h2>Professional Summary</h2>
-            <p>Experienced IT solutions professional with a strong background in Linux and infrastructure. I help clients optimize the performance and security of their platforms, blending deep technical knowledge with strategic relationship management to ensure continued success. Proven track record in solution architecture, complex troubleshooting, and technical leadership.</p>
+            <h2>Summary</h2>
+            <p style="font-size: 14px; margin: 0;">
+                Experienced IT solutions professional with a strong background in Linux and infrastructure. I help clients optimize the performance and security of their platforms, blending deep technical knowledge with strategic relationship management to ensure continued success.
+            </p>
         </section>
 
         <section>
-            <h2>Technical Skills</h2>
+            <h2>Top Skills & Languages</h2>
             <div class="skills-grid">
-                <div class="skill-category">
-                    <strong>Architecture & Cloud</strong>
-                    Edge Computing, Solution Architecture, Virtualization, Containers (Docker, Kubernetes).
+                <div class="skills-category">
+                    <strong>Top Skills</strong>
+                    Monitoramento proativo, Red Hat Linux, Treinamento
                 </div>
-                <div class="skill-category">
-                    <strong>Systems & Networks</strong>
-                    Red Hat Linux, Linux (LPI 1 & LPI 2), Networking, WAF, Caching.
+                <div class="skills-category">
+                    <strong>Languages</strong>
+                    English (Limited Working), Spanish (Limited Working)
                 </div>
-                <div class="skill-category">
-                    <strong>Operations & Support</strong>
-                    Proactive Monitoring, Incident Response, RCA, Automation, Zabbix.
-                </div>
-                <div class="skill-category">
-                    <strong>Business & Soft Skills</strong>
-                    Technical Account Management (TAM), Technical Consulting, Training, Technical Leadership.
+                <div class="skills-category">
+                    <strong>Certifications & Publications</strong>
+                    Linux Professional Institute 1 & 2<br>Wimax - Utilização em última milha
                 </div>
             </div>
         </section>
 
         <section>
-            <h2>Professional Experience</h2>
+            <h2>Experience</h2>
 
             <div class="job">
-                <div>
-                    <span class="job-title">Solutions Architect | Technical Account Manager</span>
-                    <span class="job-date">June 2023 – Present</span>
+                <div class="job-header">
+                    <div>
+                        <span class="job-title">Solutions Architect | Technical Account Manager</span><br>
+                        <span class="job-company">Azion</span>
+                    </div>
+                    <div class="job-date">June 2023 – Present (3 years 5 months)</div>
                 </div>
-                <div class="job-company">Azion</div>
+                <p style="font-size: 14px; margin: 8px 0 4px 0;">As a Solutions Architect and Technical Account Manager, I manage technical relationships with clients and help them maximize their value from the Azion platform. My main contributions include:</p>
                 <ul>
-                    <li>Managing technical relationships with clients and helping them maximize value from the Azion platform.</li>
-                    <li>Leading strategic initiatives with Customer Growth, Security, and Solutions Engineering teams ensuring long-term success.</li>
+                    <li>Leading strategic initiatives with the Customer Growth, Security, and Solutions Engineering teams, ensuring long-term client success.</li>
                     <li>Defining and executing customized solution architectures, implementing critical services to optimize performance and security.</li>
-                    <li>Acting as a technical focal point to monitor resource utilization and align solutions directly with business goals.</li>
+                    <li>Serving as a technical leader, providing training and support to clients and internal teams, as well as guiding the Solutions Lab learning path.</li>
+                    <li>Proactively managing client relationships, acting as a technical focal point to monitor resource utilization and align solutions directly with business goals.</li>
                     <li>Responding to and mitigating security incidents in collaboration with the Security Response Team.</li>
+                    <li>Diagnosing and resolving complex technical issues, ensuring stability and seamless service integration.</li>
                 </ul>
             </div>
 
             <div class="job">
-                <div>
-                    <span class="job-title">Technical Support Engineer - Specialist</span>
-                    <span class="job-date">July 2019 – June 2023</span>
+                <div class="job-header">
+                    <div>
+                        <span class="job-title">Technical Support Engineer - Specialist</span><br>
+                        <span class="job-company">Azion</span>
+                    </div>
+                    <div class="job-date">July 2019 – June 2023 (4 years) | Porto Alegre</div>
                 </div>
-                <div class="job-company">Azion</div>
                 <ul>
-                    <li>Provided world-class technical support, focusing on advanced troubleshooting in Edge Computing, WAF, and networking.</li>
-                    <li>Developed instructional materials and conducted training sessions to enable clients and internal teams.</li>
-                    <li>Represented client interests to development and product teams, ensuring feedback shaped platform evolution.</li>
+                    <li><strong>Support Specialist:</strong> Provided world-class technical support, focusing on advanced troubleshooting and issue resolution in areas like Edge Computing, security (WAF), networking, caching, and image optimization.</li>
+                    <li><strong>Education and Training:</strong> Developed instructional materials and conducted training sessions to enable clients and new team members to use the platform effectively.</li>
+                    <li><strong>Strategic Partnership:</strong> Actively participated in improving internal processes and collaborating with other teams to streamline workflows.</li>
+                    <li><strong>Effective Communication:</strong> Represented client interests to development and product teams, ensuring that feedback was considered for the platform's evolution.</li>
+                    <li><strong>Support Leadership:</strong> Served as a central point in client meetings to understand problems, define strategic solutions, and ensure quick and effective case resolution.</li>
+                    <li><strong>Knowledge Contribution:</strong> Developed and maintained knowledge base articles to assist both the internal team and clients in resolving common inquiries.</li>
                 </ul>
             </div>
 
             <div class="job">
-                <div>
-                    <span class="job-title">Support Analyst</span>
-                    <span class="job-date">September 2018 – July 2019</span>
+                <div class="job-header">
+                    <div>
+                        <span class="job-title">Support Analyst</span><br>
+                        <span class="job-company">Unirede Soluções Corporativas</span>
+                    </div>
+                    <div class="job-date">September 2018 – July 2019 (11 months)</div>
                 </div>
-                <div class="job-company">Unirede Soluções Corporativas</div>
                 <ul>
-                    <li>Analyzed critical and recurring incidents (RCA) to ensure availability and performance of customer environments.</li>
-                    <li>Implemented continuous improvements, automations, and process optimizations to increase efficiency.</li>
-                    <li>Provided consulting and support for Zabbix environments while participating in crisis rooms.</li>
+                    <li><strong>Troubleshooting and Diagnosis:</strong> Analyze critical and recurring incidents (RCA) and resolve IT issues to ensure the availability and performance of customer environments.</li>
+                    <li><strong>Incident and Request Management:</strong> Handle support tickets, which can range from events and incidents to operational requests, following documented procedures.</li>
+                    <li><strong>Improvement Implementation:</strong> Suggest and implement continuous improvements, automation, and process optimizations to reduce repetitive tasks and increase efficiency.</li>
+                    <li><strong>Team Collaboration:</strong> Work directly with other technical and business areas to identify opportunities for innovation and ensure the observability of customer environments.</li>
+                    <li><strong>Training and Consulting:</strong> Provide assistance and, in some cases, consulting for Zabbix environments, in addition to participating in internal training sessions.</li>
+                    <li><strong>Customer Communication:</strong> Act as a point of contact for the customer, participating in crisis rooms and maintaining communication to align expectations and ensure satisfaction.</li>
                 </ul>
             </div>
 
             <div class="job">
-                <div>
-                    <span class="job-title">IT Infrastructure Analyst - Linux</span>
-                    <span class="job-date">February 2018 – May 2018</span>
+                <div class="job-header">
+                    <div>
+                        <span class="job-title">IT Infrastructure Analyst - Linux</span><br>
+                        <span class="job-company">InterOp</span>
+                    </div>
+                    <div class="job-date">February 2018 – May 2018 (4 months) | Porto Alegre, Rio Grande do Sul, Brasil</div>
                 </div>
-                <div class="job-company">InterOp</div>
                 <ul>
-                    <li>Managed and administered clients' IT infrastructure, ensuring availability and performance of Linux systems and networks.</li>
+                    <li><strong>Environment Administration:</strong> Manage and administer clients' IT infrastructure, ensuring the availability and performance of Linux systems. This includes the configuration and maintenance of servers, services, and applications.</li>
+                    <li><strong>Troubleshooting:</strong> Diagnose and resolve complex technical incidents in both Linux environments and networks, providing high-quality support (Service Desk) to clients.</li>
+                    <li><strong>Emerging Technologies:</strong> Collaborate on the implementation and management of modern technologies such as virtualization, containers (Docker and Kubernetes), and cloud solutions, which InterOp addresses in its content.</li>
                 </ul>
             </div>
 
             <div class="job">
-                <div>
-                    <span class="job-title">Systems Analyst / Linux Consultant</span>
-                    <span class="job-date">May 2007 – 2018</span>
+                <div class="job-header">
+                    <div>
+                        <span class="job-title">Analista Sistemas</span><br>
+                        <span class="job-company">Associação de Literatura e Beneficência</span>
+                    </div>
+                    <div class="job-date">2013 – 2018 (5 years) | Porto Alegre e Região, Brasil</div>
                 </div>
-                <div class="job-company">Associação de Literatura e Beneficência & LM2 Consulting</div>
+            </div>
+
+            <div class="job">
+                <div class="job-header">
+                    <div>
+                        <span class="job-title">Linux Consultant at LM2 Consulting</span><br>
+                        <span class="job-company">LM2 Consulting</span>
+                    </div>
+                    <div class="job-date">May 2007 – August 2013 (6 years 4 months)</div>
+                </div>
+                <p style="font-size: 14px; margin: 8px 0 4px 0;">As a Linux Consultant, I provided specialized support for client IT infrastructures, aligning technical solutions with their business needs. My certifications, Linux LPI1 and LPI2, were essential for my responsibilities, which included:</p>
                 <ul>
-                    <li>Administered critical Linux environments, deployed monitoring tools, and developed automation scripts.</li>
+                    <li><strong>Systems Administration:</strong> Managed and maintained Linux environments, including servers, services, and applications, ensuring high availability and performance.</li>
+                    <li><strong>Optimization and Security:</strong> Conducted diagnostics and implemented improvements in operating systems, scripts, and configurations to enhance security and optimize performance.</li>
+                    <li><strong>Support and Troubleshooting:</strong> Acted on the diagnosis and resolution of complex infrastructure incidents, ensuring business continuity for clients.</li>
+                    <li><strong>Monitoring and Automation:</strong> Deployed monitoring tools for proactive problem detection. Developed scripts to automate routine tasks, increasing efficiency and reducing errors.</li>
+                    <li><strong>Strategic Collaboration:</strong> Worked closely with client teams to understand their demands, suggesting and implementing solutions that integrated with LM2's IT management strategy.</li>
                 </ul>
             </div>
         </section>
 
         <section>
-            <h2>Education & Certifications</h2>
-            <ul>
-                <li><strong>Telecommunications Engineering</strong> | Centro Universitário La Salle (2008 – 2017)</li>
-                <li><strong>Industrial IT Technician</strong> | Senai (2005 – 2007)</li>
-                <li><strong>Certifications:</strong> Linux Professional Institute 1 (LPI-1), Linux Professional Institute 2 (LPI-2)</li>
-                <li><strong>Languages:</strong> Portuguese (Native), English (Limited Working), Spanish (Limited Working)</li>
-            </ul>
+            <h2>Education</h2>
+            <div class="edu-item">
+                <div class="job-header">
+                    <div>
+                        <span class="job-title">Engenharia de Telecomunicações</span><br>
+                        <span class="job-company">Centro Universitário La Salle</span>
+                    </div>
+                    <div class="job-date">2008 – 2017</div>
+                </div>
+            </div>
+            <div class="edu-item">
+                <div class="job-header">
+                    <div>
+                        <span class="job-title">Técnico em Informática Industrial</span><br>
+                        <span class="job-company">Senai</span>
+                    </div>
+                    <div class="job-date">2005 – 2007</div>
+                </div>
+            </div>
         </section>
     </div>
 </div>
 
 <script>
-    function switchLanguage() {
-        const ptVersion = document.getElementById('version-pt');
-        const enVersion = document.getElementById('version-en');
-        const btn = document.getElementById('langToggle');
+    function switchLang(lang) {
+        const ptContent = document.getElementById('content-pt');
+        const enContent = document.getElementById('content-en');
+        const btnPt = document.getElementById('btn-pt');
+        const btnEn = document.getElementById('btn-en');
 
-        if (ptVersion.classList.contains('active')) {
-            ptVersion.classList.remove('active');
-            enVersion.classList.add('active');
-            btn.textContent = 'Versão em Português';
+        if (lang === 'pt') {
+            ptContent.classList.add('active');
+            enContent.classList.remove('active');
+            btnPt.style.display = 'none';
+            btnEn.style.display = 'inline-block';
         } else {
-            enVersion.classList.remove('active');
-            ptVersion.classList.add('active');
-            btn.textContent = 'English Version';
+            enContent.classList.add('active');
+            ptContent.classList.remove('active');
+            btnEn.style.display = 'none';
+            btnPt.style.display = 'inline-block';
         }
     }
 </script>
